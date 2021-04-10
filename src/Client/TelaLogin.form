@@ -74,17 +74,15 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="icon" pref="279" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="btnLogar" min="-2" pref="93" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnLimpar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="lblLogin" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtLogin" max="32767" attributes="0"/>
-                              <Component id="lblSenha" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSenha" alignment="0" pref="279" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btnLogar" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnLimpar" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="lblLogin" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtLogin" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblSenha" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSenha" alignment="0" pref="279" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>

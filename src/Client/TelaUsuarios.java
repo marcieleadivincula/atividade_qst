@@ -12,9 +12,9 @@ public class TelaUsuarios extends javax.swing.JFrame {
         initComponents();
         popularTabela(service.getLista());
     }
-   
+
     UsuarioService service = new UsuarioService();
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -34,7 +34,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         principal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -45,6 +45,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
         lblUser.setText("Usuario");
 
         btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout filtroLayout = new javax.swing.GroupLayout(filtro);
         filtro.setLayout(filtroLayout);
@@ -89,6 +94,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
         scroll.setViewportView(tblUsuarios);
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -192,7 +202,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
         String senha = JOptionPane.showInputDialog("Digite a senha do usuario");
         Usuario user = new Usuario(nome, usuario, senha);
         String confirmSenha = JOptionPane.showInputDialog("Confirme a sua senha");
-        while(!senha.equals(confirmSenha)) {
+        while (!senha.equals(confirmSenha)) {
             confirmSenha = JOptionPane.showInputDialog("Confirme a sua senha");
         }
         service.cadastrarUsuario(user);
@@ -200,20 +210,38 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-       Integer codigo = tblUsuarios.getSelectedRow();
-       service.excluirUsuario(codigo);
-       popularTabela(service.getLista());
+        Integer codigo = tblUsuarios.getSelectedRow();
+        service.excluirUsuario(codigo);
+        popularTabela(service.getLista());
     }//GEN-LAST:event_btnExcluirActionPerformed
-    
-    protected Boolean sairSemSalvar() {
-        Integer option = JOptionPane.showConfirmDialog(null, "Deseja sair sem salvar as informações ?");
-        if(option == 0) {
-            return true;
-        }else {
-            return false;
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        Integer codigo = tblUsuarios.getSelectedRow();
+        String nome = JOptionPane.showInputDialog("Digite o nome do usuario");
+        String usuario = JOptionPane.showInputDialog("Digite o login do usuario");
+        String senha = JOptionPane.showInputDialog("Digite a senha do usuario");
+        if (nome.isEmpty()) {
+            nome = tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0).toString();
         }
-    }
-      
+        if (usuario.isEmpty()) {
+            usuario = tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString();
+        }
+        if (senha.isEmpty()) {
+            senha = tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 2).toString();
+        }
+        Usuario user = new Usuario(nome, usuario, senha);
+        service.alterarUsuario(user, codigo);
+        popularTabela(service.getLista());
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        List<Usuario> usuarios;
+        String nomeConsulta = txtNome.getText();
+        String usuarioConsulta = txtUsuario.getText();
+        usuarios = service.consultar(nomeConsulta, usuarioConsulta);
+        popularTabela(usuarios);
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -238,42 +266,34 @@ public class TelaUsuarios extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void popularTabela(List<Usuario> usuarios) {
         DefaultTableModel tabela = (DefaultTableModel) tblUsuarios.getModel();
         tabela.setNumRows(0);
-        for(Usuario user : usuarios) {
-            tabela.addRow(new Object[] {
+        for (Usuario user : usuarios) {
+            tabela.addRow(new Object[]{
                 user.getNome(),
                 user.getLogin(),
                 user.getSenha()
             });
         }
-        
+
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Cadastro;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
-    private javax.swing.JButton btnLimpar1;
-    private javax.swing.JButton btnLogar1;
     private javax.swing.JPanel container;
-    private javax.swing.JPanel container1;
     private javax.swing.JPanel filtro;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblLogin1;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JLabel lblSenha1;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel principal;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JTable tblUsuarios;
-    private javax.swing.JTextField txtLogin1;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSenha1;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
