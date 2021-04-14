@@ -5,7 +5,8 @@ public class Usuario {
     private String nome;
     private String login;
     private String senha;
-
+    private String ativo;
+    
     public Usuario() {
 
     }
@@ -16,6 +17,13 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario(String nome, String login, String senha, String ativo) {
+        this.nome = nome;
+        this.login = login;
+        this.senha = senha;
+        this.ativo = ativo;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -38,6 +46,14 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(String ativo) {
+        this.ativo = ativo;
     }
 
 }

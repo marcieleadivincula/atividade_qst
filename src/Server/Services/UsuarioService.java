@@ -35,8 +35,8 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public void excluirUsuario(Integer codigo) {
-        usuarios.remove(usuarios.get(codigo));
+    public void inativarUsuario(Integer codigo) {
+        usuarios.get(codigo).setAtivo("Inativo");
     }
     
     public void alterarUsuario(Usuario usuario, Integer codigo) {
@@ -56,5 +56,9 @@ public class UsuarioService {
         } else {
             return resultado;
         }
+    }
+    
+    public Usuario getUsuarioByCodigo(Integer codigo) {
+        return usuarios.get(codigo);
     }
 }

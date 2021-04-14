@@ -88,19 +88,41 @@ public class TelaUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Usuario", "Senha"
+                "Nome", "Usuario", "Senha", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblUsuarios.setColumnSelectionAllowed(true);
+        tblUsuarios.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                RowfocusLost(evt);
+            }
+        });
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                habilitarAlterar(evt);
+            }
+        });
         scroll.setViewportView(tblUsuarios);
+        tblUsuarios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
             }
         });
 
-        btnExcluir.setText("Excluir");
+        btnExcluir.setText("Inativar");
+        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -165,6 +187,8 @@ public class TelaUsuarios extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        filtro.getAccessibleContext().setAccessibleName("Filtro");
+
         javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
         container.setLayout(containerLayout);
         containerLayout.setHorizontalGroup(
@@ -198,9 +222,12 @@ public class TelaUsuarios extends javax.swing.JFrame {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         String nome = JOptionPane.showInputDialog("Digite o nome do usuario");
+        cancelarIncluirClicked(nome, evt);
         String usuario = JOptionPane.showInputDialog("Digite o login do usuario");
+        cancelarIncluirClicked(usuario, evt);
         String senha = JOptionPane.showInputDialog("Digite a senha do usuario");
-        Usuario user = new Usuario(nome, usuario, senha);
+        cancelarIncluirClicked(senha, evt);
+        Usuario user = new Usuario(nome, usuario, senha, "Ativo");
         String confirmSenha = JOptionPane.showInputDialog("Confirme a sua senha");
         while (!senha.equals(confirmSenha)) {
             confirmSenha = JOptionPane.showInputDialog("Confirme a sua senha");
@@ -211,27 +238,35 @@ public class TelaUsuarios extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         Integer codigo = tblUsuarios.getSelectedRow();
-        service.excluirUsuario(codigo);
+        service.inativarUsuario(codigo);
         popularTabela(service.getLista());
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         Integer codigo = tblUsuarios.getSelectedRow();
         String nome = JOptionPane.showInputDialog("Digite o nome do usuario");
+        cancelarAlterarClicked(nome, evt);
         String usuario = JOptionPane.showInputDialog("Digite o login do usuario");
+        cancelarAlterarClicked(usuario, evt);
         String senha = JOptionPane.showInputDialog("Digite a senha do usuario");
+        cancelarAlterarClicked(senha, evt);
         if (nome.isEmpty()) {
-            nome = tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0).toString();
+            nome = service.getUsuarioByCodigo(codigo).getNome();
         }
         if (usuario.isEmpty()) {
-            usuario = tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString();
+            usuario = service.getUsuarioByCodigo(codigo).getLogin();
         }
         if (senha.isEmpty()) {
-            senha = tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 2).toString();
+            senha = service.getUsuarioByCodigo(codigo).getSenha();
         }
-        Usuario user = new Usuario(nome, usuario, senha);
+        String ativo = service.getUsuarioByCodigo(codigo).getAtivo();
+        Usuario user = new Usuario(nome, usuario, senha, ativo);
         service.alterarUsuario(user, codigo);
         popularTabela(service.getLista());
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
@@ -241,6 +276,22 @@ public class TelaUsuarios extends javax.swing.JFrame {
         usuarios = service.consultar(nomeConsulta, usuarioConsulta);
         popularTabela(usuarios);
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void habilitarAlterar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_habilitarAlterar
+        if("Ativo".equals(service.getUsuarioByCodigo(tblUsuarios.getSelectedRow()))) {
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        }
+    }//GEN-LAST:event_habilitarAlterar
+
+    private void RowfocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_RowfocusLost
+        if("filtro".equalsIgnoreCase(evt.getOppositeComponent().getParent().getAccessibleContext().getAccessibleName()) ||
+                !evt.getOppositeComponent().getClass().toString().contains("JButton")) {
+            tblUsuarios.getSelectionModel().clearSelection();
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_RowfocusLost
 
     public static void main(String args[]) {
         try {
@@ -274,12 +325,27 @@ public class TelaUsuarios extends javax.swing.JFrame {
             tabela.addRow(new Object[]{
                 user.getNome(),
                 user.getLogin(),
-                user.getSenha()
+                "********",
+                user.getAtivo()
             });
         }
 
     }
-
+       
+    private void cancelarAlterarClicked(String input, java.awt.event.ActionEvent evt) {
+        if(input == null) {
+            evt.getClass().cast(ABORT);
+        }
+    }
+    
+    private void cancelarIncluirClicked(String input, java.awt.event.ActionEvent evt) {
+        if(input == null || input.isEmpty()) {
+            evt.getClass().cast(ABORT);
+        }
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Cadastro;
     private javax.swing.JButton btnAlterar;
