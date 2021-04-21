@@ -10,6 +10,11 @@ public class Usuario {
     public Usuario() {
 
     }
+    
+    public Usuario(String login, String senha){
+        this.login = login;
+        this.senha = senha;
+    }
 
     public Usuario(String nome, String login, String senha) {
         this.nome = nome;
