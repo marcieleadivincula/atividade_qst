@@ -52,6 +52,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
         
         assertEquals(expResult, result);
+        System.out.println("usuarioESenhaValidos: " + result);
     }
     
     @Test
@@ -62,6 +63,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("usuarioESenhaInvalidos: " + result);
     }
 
     @Test
@@ -72,6 +74,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("usuarioInvalidoESenhaValido: " + result);
     }
 
     @Test
@@ -82,6 +85,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("usuarioValidoESenhaInvalido: " + result);
     }
 
     @Test
@@ -92,6 +96,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("usuarioESenhaVazios: " + result);
     }
 
     @Test
@@ -102,6 +107,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("apenasUsuarioVazio: " + result);
     }
 
     @Test
@@ -112,6 +118,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("apenasSenhaVazia: " + result);
     }
 
     @Test
@@ -122,6 +129,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("senhaMenosDeOitoCaracteres: " + result);
     }
 
     @Test
@@ -132,6 +140,7 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("senhaMaisDezCaracteres: " + result);
     }
 
     @Test
@@ -142,5 +151,6 @@ public class UsuarioServiceTest {
         boolean result = userService.login(user);
 
         assertEquals(expResult, result);
+        System.out.println("usuarioESenhaVaziosELimpar: " + result);
     }
 }
