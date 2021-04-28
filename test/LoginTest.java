@@ -6,6 +6,8 @@
 
 import Server.Entity.Usuario;
 import Server.Services.UsuarioService;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +19,9 @@ import static org.junit.Assert.*;
  *
  * @author marci
  */
-public class UsuarioServiceTest {
+public class LoginTest {
     
-    public UsuarioServiceTest() {
+    public LoginTest() {
     }
     
     @BeforeClass
@@ -153,4 +155,5 @@ public class UsuarioServiceTest {
         assertEquals(expResult, result);
         System.out.println("usuarioESenhaVaziosELimpar: " + result);
     }
+ 
 }
