@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import Server.Entity.Usuario;
 import Server.Services.UsuarioService;
 import java.util.List;
@@ -14,10 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author marci
- */
 public class ConsultarTest {
     
     public ConsultarTest() {
@@ -38,17 +28,11 @@ public class ConsultarTest {
     @After
     public void tearDown() {
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
     
     @Test
-    public void usuarioESenhaValidosEClicarEmConsultar(){
+    public void usuarioENomeValidosEClicarEmConsultar(){
         //nome e usuário
-        Usuario userToFind = new Usuario("admin", "admin", "admin"); 
+        Usuario userToFind = new Usuario("admin", "admin", "12345678", "admin"); 
         UsuarioService userService = new UsuarioService();
         userService.cadastrarUsuario(userToFind);
 
@@ -56,12 +40,11 @@ public class ConsultarTest {
         result.contains(userToFind);
         
         assertEquals(true, result.contains(userToFind));
-        //System.out.println("usuarioESenhaValidosEClicarEmConsultar: " + result);
     }
 
     @Test
-    public void usuarioESenhaInvalidosEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "admin"); 
+    public void usuarioENomeInvalidosEClicarEmConsultar(){
+        Usuario userToFind = new Usuario("admin", "admin", "12345678", "admin"); 
         UsuarioService userService = new UsuarioService();
         userService.cadastrarUsuario(userToFind);
  
@@ -69,12 +52,11 @@ public class ConsultarTest {
         result.contains(userToFind);
         
         assertEquals(false, result.contains(userToFind));
-        //System.out.println("usuarioESenhaInvalidosEClicarEmConsultar: " + result);
     }
     
      @Test
-    public void usuarioESenhaVaziosEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "admin"); 
+    public void usuarioENomeVaziosEClicarEmConsultar(){
+        Usuario userToFind = new Usuario("admin", "admin", "12345678","admin"); 
         UsuarioService userService = new UsuarioService();
         userService.cadastrarUsuario(userToFind);
  
@@ -82,12 +64,11 @@ public class ConsultarTest {
         result.contains(userToFind);
         
         assertEquals(true, result.contains(userToFind));
-        //System.out.println("usuarioESenhaVaziosEClicarEmConsultar: " + result);
     }
     
      @Test
     public void apenasNomeEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "admin"); 
+        Usuario userToFind = new Usuario("admin", "admin", "12345678","admin"); 
         UsuarioService userService = new UsuarioService();
         userService.cadastrarUsuario(userToFind);
  
@@ -95,12 +76,11 @@ public class ConsultarTest {
         result.contains(userToFind);
         
         assertEquals(true, result.contains(userToFind));
-        //System.out.println("apenasNomeEClicarEmConsultar: " + result);
     }
     
     @Test
     public void apenasUsuarioEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "admin"); 
+        Usuario userToFind = new Usuario("admin", "admin", "12345678","admin"); 
         UsuarioService userService = new UsuarioService();
         userService.cadastrarUsuario(userToFind);
  
@@ -108,6 +88,5 @@ public class ConsultarTest {
         result.contains(userToFind);
         
         assertEquals(true, result.contains(userToFind));
-        //System.out.println("apenasUsuarioEClicarEmConsultar: " + result);
     }
 }

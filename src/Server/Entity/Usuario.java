@@ -1,5 +1,7 @@
 package Server.Entity;
 
+import javax.swing.JOptionPane;
+
 public class Usuario {
 
     private String nome;
@@ -15,13 +17,13 @@ public class Usuario {
         this.login = login;
         this.senha = senha;
     }
-
-    public Usuario(String nome, String login, String senha) {
+    
+    public Usuario(String nome, String login, String ativo) {
         this.nome = nome;
         this.login = login;
-        this.senha = senha;
+        this.ativo = ativo;
     }
-
+    
     public Usuario(String nome, String login, String senha, String ativo) {
         this.nome = nome;
         this.login = login;
@@ -60,5 +62,15 @@ public class Usuario {
     public void setAtivo(String ativo) {
         this.ativo = ativo;
     }
+    
+    public Boolean validaSenha(String senha) {
+        if(senha.length() >= 8 && senha.length() < 10) {
+            return true;
+        }else {
+            JOptionPane.showMessageDialog(null, "A senha deve conter 8 a 10 caracteres somente");
+            return false;
+        }
+    }
+    
 
 }

@@ -28,7 +28,9 @@ public class UsuarioService {
     }
     
     public void cadastrarUsuario(Usuario user) {
-        usuarios.add(user);
+        if(user.validaSenha(user.getSenha())) {
+             usuarios.add(user);
+        }
     }
 
     public List<Usuario> getLista() {

@@ -123,15 +123,19 @@ public class TelaLogin extends javax.swing.JFrame {
     private void efetuarLogin(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_efetuarLogin
       Usuario user = new Usuario(); 
       user.setLogin(txtLogin.getText());
-      user.setSenha(txtSenha.getText());
+      if(user.validaSenha(txtSenha.getText())) {
+          user.setSenha(txtSenha.getText());
       
-      if(service.login(user)) {
-          TelaUsuarios telaUsuarios = new TelaUsuarios();
-          telaUsuarios.show(true);
+        if(service.login(user)) {
+            TelaUsuarios telaUsuarios = new TelaUsuarios();
+            telaUsuarios.show(true);
+        }else {
+            JOptionPane.showMessageDialog(null, "Usuario e senha incorretos");
+        }
+        limparCampos(evt);
       }else {
-          JOptionPane.showMessageDialog(null, "Usuario e senha incorretos");
+          JOptionPane.showMessageDialog(null, "Tamanho Minimo da senha é de 8 caracteres e maximo de 10");
       }
-      limparCampos(evt);
     }//GEN-LAST:event_efetuarLogin
 
     private void limparCampos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCampos

@@ -278,7 +278,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void habilitarAlterar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_habilitarAlterar
-        if("Ativo".equals(service.getUsuarioByCodigo(tblUsuarios.getSelectedRow()))) {
+        if("Ativo".equals(service.getUsuarioByCodigo(tblUsuarios.getSelectedRow()).getAtivo())) {
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
         }

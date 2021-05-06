@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import Server.Entity.Usuario;
 import Server.Services.UsuarioService;
 import org.junit.After;
@@ -13,10 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author marci
- */
 public class InativarTest {
     
     public InativarTest() {
@@ -38,10 +28,16 @@ public class InativarTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void inativarUsuario() {
+        Integer codigo = 1;
+        UsuarioService service = new UsuarioService();
+        service.cadastrarUsuario(new Usuario("admin", "admin", "12345678","admin"));
+        service.cadastrarUsuario(new Usuario("maria", "maria", "12345678", "maria"));
+        service.cadastrarUsuario(new Usuario("juca", "juca", "12345678", "juca"));
+        service.inativarUsuario(codigo);
+        assertEquals(service.getUsuarioByCodigo(codigo).getAtivo(), "Inativo");
+    }
+    
     
 }
