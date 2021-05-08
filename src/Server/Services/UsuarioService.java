@@ -6,61 +6,50 @@ import java.util.ArrayList;
 
 public class UsuarioService {
 
-    private final List<Usuario> usuarios = new ArrayList();
+    private final UsuarioImp dao = new UsuarioImp();
 
     public boolean login(Usuario user) {
-        if(administrador(user)) {
+        if (administrador(user)) {
             return true;
         }
-        for (Usuario userCadastrado : this.usuarios) {
-            if (user.getNome().equals(userCadastrado.getNome()) && user.getSenha().equals(userCadastrado.getSenha())) {
+        for (Usuario userCadastrado : dao.getUsuarios()) {
+            if (user.getLogin().equals(userCadastrado.getLogin()) && user.getSenha().equals(userCadastrado.getSenha())) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public Boolean administrador(Usuario user) {
-        if("admin".equals(user.getLogin()) && "admin".equals(user.getSenha())) {
+        if ("admin".equals(user.getLogin()) && "admin".equals(user.getSenha())) {
             return true;
         }
         return false;
     }
-    
+
     public void cadastrarUsuario(Usuario user) {
-        if(user.validaSenha(user.getSenha())) {
-             usuarios.add(user);
-        }
+        dao.insertUsuario(user);
     }
 
     public List<Usuario> getLista() {
-        return usuarios;
+        return dao.getUsuarios();
     }
 
     public void inativarUsuario(Integer codigo) {
-        usuarios.get(codigo).setAtivo("Inativo");
+        dao.inativarUsuario(codigo);
     }
-    
-    public void alterarUsuario(Usuario usuario, Integer codigo) {
-        usuarios.remove(usuarios.get(codigo));
-        usuarios.add(codigo, usuario);
+
+    public void alterarUsuario(Usuario usuario) {
+        dao.alterarUsuario(usuario);
     }
 
     public List<Usuario> consultar(String nomeConsulta, String usuarioConsulta) {
         List<Usuario> resultado = new ArrayList<>();
-        for (Usuario user : usuarios) {
-            if (nomeConsulta.equals(user.getNome()) || usuarioConsulta.equals(user.getLogin())) {
-                resultado.add(user);
-            }
-        }
-        if (nomeConsulta.isEmpty() && usuarioConsulta.isEmpty()) {
-            return this.getLista();
-        } else {
-            return resultado;
-        }
+        resultado = dao.getUsuariosFilter(nomeConsulta, usuarioConsulta);
+        return resultado;
     }
-    
+
     public Usuario getUsuarioByCodigo(Integer codigo) {
-        return usuarios.get(codigo);
+        return dao.getUsuarioById(codigo);
     }
 }

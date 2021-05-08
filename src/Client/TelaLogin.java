@@ -11,7 +11,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     UsuarioService service = new UsuarioService();
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -58,15 +58,14 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(icon, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-                    .addGroup(PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(PrincipalLayout.createSequentialGroup()
-                            .addComponent(btnLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnLimpar))
-                        .addComponent(lblLogin)
-                        .addComponent(txtLogin)
-                        .addComponent(lblSenha)
-                        .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PrincipalLayout.createSequentialGroup()
+                        .addComponent(btnLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimpar))
+                    .addComponent(lblLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSenha, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PrincipalLayout.setVerticalGroup(
@@ -118,24 +117,22 @@ public class TelaLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void efetuarLogin(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_efetuarLogin
-      Usuario user = new Usuario(); 
-      user.setLogin(txtLogin.getText());
-      if(user.validaSenha(txtSenha.getText())) {
-          user.setSenha(txtSenha.getText());
-      
-        if(service.login(user)) {
-            TelaUsuarios telaUsuarios = new TelaUsuarios();
-            telaUsuarios.show(true);
-        }else {
-            JOptionPane.showMessageDialog(null, "Usuario e senha incorretos");
+        Usuario user = new Usuario();
+        user.setLogin(txtLogin.getText());
+        user.setSenha(txtSenha.getText());
+        if (service.administrador(user) || user.validaSenha(txtSenha.getText())) {
+            if (service.login(user)) {
+                TelaUsuarios telaUsuarios = new TelaUsuarios();
+                telaUsuarios.show(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario e senha incorretos");
+            }
+            limparCampos(evt);
         }
-        limparCampos(evt);
-      }else {
-          JOptionPane.showMessageDialog(null, "Tamanho Minimo da senha é de 8 caracteres e maximo de 10");
-      }
     }//GEN-LAST:event_efetuarLogin
 
     private void limparCampos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCampos

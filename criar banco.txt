@@ -1,0 +1,13 @@
+CREATE DATABASE db_qts;
+
+USE db_qts;
+
+CREATE TABLE usuarios(
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	login VARCHAR(100),
+	senha VARCHAR(10),
+	nome VARCHAR(100),
+	ativo VARCHAR(10)
+)ENGINE = InnoDB;
+
+INSERT INTO usuarios VALUES (0,'teste','12345678','teste', 'Ativo');

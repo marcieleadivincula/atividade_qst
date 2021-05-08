@@ -88,11 +88,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Usuario", "Senha", "Status"
+                "Codigo", "Nome", "Usuario", "Senha", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                true, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -218,6 +218,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
@@ -245,7 +246,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        Integer codigo = tblUsuarios.getSelectedRow();
+        Integer codigo = (Integer) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
         String nome = JOptionPane.showInputDialog("Digite o nome do usuario");
         cancelarAlterarClicked(nome, evt);
         String usuario = JOptionPane.showInputDialog("Digite o login do usuario");
@@ -262,8 +263,8 @@ public class TelaUsuarios extends javax.swing.JFrame {
             senha = service.getUsuarioByCodigo(codigo).getSenha();
         }
         String ativo = service.getUsuarioByCodigo(codigo).getAtivo();
-        Usuario user = new Usuario(nome, usuario, senha, ativo);
-        service.alterarUsuario(user, codigo);
+        Usuario user = new Usuario(codigo, nome, usuario, senha, ativo);
+        service.alterarUsuario(user);
         popularTabela(service.getLista());
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
@@ -278,15 +279,16 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void habilitarAlterar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_habilitarAlterar
-        if("Ativo".equals(service.getUsuarioByCodigo(tblUsuarios.getSelectedRow()).getAtivo())) {
+        Integer codigo = (Integer) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
+        if ("Ativo".equals(service.getUsuarioByCodigo(codigo).getAtivo())) {
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
         }
     }//GEN-LAST:event_habilitarAlterar
 
     private void RowfocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_RowfocusLost
-        if("filtro".equalsIgnoreCase(evt.getOppositeComponent().getParent().getAccessibleContext().getAccessibleName()) ||
-                !evt.getOppositeComponent().getClass().toString().contains("JButton")) {
+        if ("filtro".equalsIgnoreCase(evt.getOppositeComponent().getParent().getAccessibleContext().getAccessibleName())
+                || !evt.getOppositeComponent().getClass().toString().contains("JButton")) {
             tblUsuarios.getSelectionModel().clearSelection();
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
@@ -323,6 +325,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
         tabela.setNumRows(0);
         for (Usuario user : usuarios) {
             tabela.addRow(new Object[]{
+                user.getId(),
                 user.getNome(),
                 user.getLogin(),
                 "********",
@@ -331,21 +334,20 @@ public class TelaUsuarios extends javax.swing.JFrame {
         }
 
     }
-       
+
     private void cancelarAlterarClicked(String input, java.awt.event.ActionEvent evt) {
-        if(input == null) {
+        if (input == null) {
             evt.getClass().cast(ABORT);
         }
     }
-    
+
     private void cancelarIncluirClicked(String input, java.awt.event.ActionEvent evt) {
-        if(input == null || input.isEmpty()) {
+        if (input == null || input.isEmpty()) {
             evt.getClass().cast(ABORT);
         }
     }
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Cadastro;
     private javax.swing.JButton btnAlterar;
