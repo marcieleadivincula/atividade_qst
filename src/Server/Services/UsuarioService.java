@@ -52,4 +52,12 @@ public class UsuarioService {
     public Usuario getUsuarioByCodigo(Integer codigo) {
         return dao.getUsuarioById(codigo);
     }
+    
+    public Usuario ultimoUsuarioInserido() {
+        return dao.getUsuarioById(dao.getIdUltimoUsuarioInserido());
+    }
+    
+    public Integer countUsuarios() {
+        return getLista().size();
+    }
 }

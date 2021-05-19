@@ -31,9 +31,18 @@ public class CadastrarTest {
     @Test
     public void cadastrarUsuario() {
         UsuarioService service = new UsuarioService();
-        Usuario user = new Usuario("admin", "admin", "12345678","admin");
+        Usuario user = new Usuario("admin", "admin", "12345678","Ativo");
+        user.setId(service.ultimoUsuarioInserido().getId() + 1);
         service.cadastrarUsuario(user);
-        assertEquals(true, service.getLista().contains(user));
+        assertEquals(service.ultimoUsuarioInserido().getId(), user.getId());
+    }
+    
+    public void cadastrarUsuarioInvalido() {
+        UsuarioService service = new UsuarioService();
+        Usuario user = new Usuario("admin", "admin", "012345678910","Ativo");
+        user.setId(service.ultimoUsuarioInserido().getId() + 1);
+        service.cadastrarUsuario(user);
+        assertEquals(service.ultimoUsuarioInserido().getId(), user.getId());
     }
     
     @Test

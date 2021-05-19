@@ -30,7 +30,7 @@ public class LoginTest {
     
   @Test
     public void usuarioESenhaValidos(){
-        Usuario user = new Usuario("admin", "admin");
+        Usuario user = new Usuario("testeXPTO", "1234567894");
         UsuarioService userService = new UsuarioService();
         boolean expResult = true;
         boolean result = userService.login(user);
@@ -125,17 +125,5 @@ public class LoginTest {
 
         assertEquals(expResult, result);
         System.out.println("senhaMaisDezCaracteres: " + result);
-    }
-
-    @Test
-    public void usuarioESenhaVaziosELimpar(){
-        Usuario user = new Usuario("admin", "");
-        UsuarioService userService = new UsuarioService();
-        boolean expResult = false;
-        boolean result = userService.login(user);
-
-        assertEquals(expResult, result);
-        System.out.println("usuarioESenhaVaziosELimpar: " + result);
-    }
- 
+    } 
 }

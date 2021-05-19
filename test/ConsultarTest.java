@@ -32,61 +32,46 @@ public class ConsultarTest {
     @Test
     public void usuarioENomeValidosEClicarEmConsultar(){
         //nome e usuário
-        Usuario userToFind = new Usuario("admin", "admin", "12345678", "admin"); 
         UsuarioService userService = new UsuarioService();
-        userService.cadastrarUsuario(userToFind);
 
-        List<Usuario> result = userService.consultar("admin", "admin");
-        result.contains(userToFind);
+        List<Usuario> result = userService.consultar("teste123", "testeXPTO");
         
-        assertEquals(true, result.contains(userToFind));
+        assertEquals(1, result.size());
     }
 
     @Test
     public void usuarioENomeInvalidosEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "12345678", "admin"); 
         UsuarioService userService = new UsuarioService();
-        userService.cadastrarUsuario(userToFind);
  
-        List<Usuario> result = userService.consultar("juca", "juca");
-        result.contains(userToFind);
+        List<Usuario> result = userService.consultar("nuncaUsarEsteNomeParaCadastro", "nuncaUsarEsteNomeParaCadastro");
         
-        assertEquals(false, result.contains(userToFind));
+        assertEquals(0, result.size());
     }
     
      @Test
     public void usuarioENomeVaziosEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "12345678","admin"); 
         UsuarioService userService = new UsuarioService();
-        userService.cadastrarUsuario(userToFind);
- 
+        Integer totalCadastrado = userService.countUsuarios();
         List<Usuario> result = userService.consultar("", "");
-        result.contains(userToFind);
         
-        assertEquals(true, result.contains(userToFind));
+        assertEquals(totalCadastrado.longValue(), result.size());
     }
     
      @Test
     public void apenasNomeEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "12345678","admin"); 
         UsuarioService userService = new UsuarioService();
-        userService.cadastrarUsuario(userToFind);
  
-        List<Usuario> result = userService.consultar("admin", "");
-        result.contains(userToFind);
+        List<Usuario> result = userService.consultar("teste123", "");
         
-        assertEquals(true, result.contains(userToFind));
+        assertEquals(1, result.size());
     }
     
     @Test
     public void apenasUsuarioEClicarEmConsultar(){
-        Usuario userToFind = new Usuario("admin", "admin", "12345678","admin"); 
         UsuarioService userService = new UsuarioService();
-        userService.cadastrarUsuario(userToFind);
  
-        List<Usuario> result = userService.consultar("", "admin");
-        result.contains(userToFind);
+        List<Usuario> result = userService.consultar("", "testeXPTO");
         
-        assertEquals(true, result.contains(userToFind));
+        assertEquals(1, result.size());
     }
 }

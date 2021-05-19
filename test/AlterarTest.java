@@ -33,14 +33,14 @@ public class AlterarTest {
        //user e código
        Usuario user;
        UsuarioService userService = new UsuarioService(); 
-       userService.cadastrarUsuario(new Usuario("admin", "admin", "12345678","admin"));
-       userService.cadastrarUsuario(new Usuario("maria", "maria", "12345678", "maria"));
-       userService.cadastrarUsuario(new Usuario("juca", "juca", "12345678", "juca"));
+
+       user = userService.ultimoUsuarioInserido();
+       user.setLogin("testeXPTO");
+       user.setSenha("1234567894");
+       user.setNome("teste123");
+       userService.alterarUsuario(user);
        
-       user = new Usuario("joao", "joao", "joao","joao");
-       userService.alterarUsuario(user, 2);
-       
-       assertEquals(user, userService.getUsuarioByCodigo(2));
+       assertEquals(user.getLogin(), userService.ultimoUsuarioInserido().getLogin());
     }
     
 }

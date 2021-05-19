@@ -5,6 +5,7 @@ import Server.Entity.Usuario;
 import java.util.List;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class UsuarioImp {
 
@@ -101,6 +102,22 @@ public class UsuarioImp {
             System.out.println(e.getMessage());
         }
         return usuarios;
+    }
+    
+    public Integer getIdUltimoUsuarioInserido() {
+        StringBuilder sql = new StringBuilder();
+        ResultSet rs = null;
+        try {
+            sql.append("SELECT MAX(ID) id FROM usuarios");
+            rs = Connection.executaSelect(sql.toString());
+            
+            while(rs.next()) {
+                return rs.getInt("id");
+            }
+        }catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return null;
     }
 
     private Usuario montarUsuario(ResultSet rs) throws Exception {

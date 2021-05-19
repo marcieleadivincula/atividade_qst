@@ -29,14 +29,11 @@ public class InativarTest {
     }
 
     @Test
-    public void inativarUsuario() {
-        Integer codigo = 1;
+    public void inativarUsuario() {  
         UsuarioService service = new UsuarioService();
-        service.cadastrarUsuario(new Usuario("admin", "admin", "12345678","admin"));
-        service.cadastrarUsuario(new Usuario("maria", "maria", "12345678", "maria"));
-        service.cadastrarUsuario(new Usuario("juca", "juca", "12345678", "juca"));
-        service.inativarUsuario(codigo);
-        assertEquals(service.getUsuarioByCodigo(codigo).getAtivo(), "Inativo");
+        Integer id = service.ultimoUsuarioInserido().getId();
+        service.inativarUsuario(id);
+        assertEquals(service.getUsuarioByCodigo(id).getAtivo(), "Inativo");
     }
     
     
